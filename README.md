@@ -1,63 +1,68 @@
-# EduFlow Pakistan — AI Multi-Agent Education Platform
+<div align="center">
 
-> Addressing Pakistan's education crisis through AI-powered grading, feedback, and school monitoring.
+# 📚 EduFlow Pakistan
 
----
+*AI Multi-Agent Education Platform — Addressing Pakistan's Education Crisis*
 
-## Quick Start (Local Demo)
+![Last Commit](https://img.shields.io/github/last-commit/Muhammad-Ahmed-Rayyan/EduFlow) ![languages](https://img.shields.io/github/languages/count/Muhammad-Ahmed-Rayyan/EduFlow)
 
-### 1. Prerequisites
-- Python 3.11+
-- Node.js 18+
-- PostgreSQL running on localhost:5432
+<br>
 
-### 2. Backend
+Built with the tools and technologies:
+![Next.js](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi) ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![Gemini](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white) ![Google Cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=for-the-badge&logo=google-cloud&logoColor=white)
 
-```bash
-cd backend
-
-# Create virtualenv
-python -m venv venv
-venv\Scripts\activate          # Windows
-# source venv/bin/activate     # Mac/Linux
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Copy and configure env
-copy ..\env.example .env
-# Edit .env — set GEMINI_API_KEY at minimum
-# DEMO_MODE=True means no real API calls are needed for the demo
-
-# Seed demo data
-python seed.py
-
-# Start server
-uvicorn main:app --reload --port 8000
-```
-
-API docs available at: http://localhost:8000/docs
-
-### 3. Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Dashboard available at: http://localhost:3000
-
-### 4. Demo Login
-
-The dashboard auto-logs in as **Ms. Ayesha Raza** via `GET /auth/demo`.  
-No Google OAuth credentials needed in DEMO_MODE.
+</div>
 
 ---
 
-## Architecture
+## 🧠 Project Summary
 
-```
+**EduFlow** is a 9-agent AI platform built to address Pakistan's education crisis through AI-powered grading, feedback, and school monitoring. A single student submission flows through a pipeline of specialized agents — language translation, plagiarism/AI-content integrity checks, rubric-based grading, teacher human-in-the-loop review, multilingual feedback generation, parent notification, class-level analytics, and automated intervention planning.
+
+🏆 Placed 2nd at the National AI Hackathon '26 Karachi Regional (KSBL, organized by atomcamp; ~60 teams, ~176 participants). Built with a team of three: Rayyan, Um-Ul-Baneen, and Syed Fawad Haider Kazmi.
+
+---
+
+## 🚀 Features
+
+- 🌐 **Zubaan Agent (Input)**
+  Language detection and translation on every incoming submission.
+
+- 📥 **Ingestion Agent**
+  Content normalisation and rubric parsing for every submission.
+
+- 🕵️ **Integrity Agent**
+  Plagiarism and AI-generated content detection via FAISS similarity search, run in parallel with grading.
+
+- 📝 **Grading Agent**
+  Per-criterion rubric scoring powered by Gemini, run in parallel with integrity checks.
+
+- 👩‍🏫 **Human-in-the-Loop Review**
+  Teacher approve / override / flag step, with a 24-hour timeout reminder if left unreviewed.
+
+- 💬 **Feedback Agent**
+  Gemini-generated student report after teacher approval.
+
+- 🌐 **Zubaan Agent (Output)**
+  Translates the final feedback report back into the student's language.
+
+- 📲 **Waalid Agent**
+  Sends a WhatsApp summary to the parent after feedback is finalized.
+
+- 📊 **Analytics Agent**
+  Class-level trend tracking and intervention detection after every approval.
+
+- 🩹 **Taleem Gap Agent**
+  Triggers a 14-day SNC-aligned recovery plan when a student scores below 50% twice.
+
+- 👻 **Ghost School Detector**
+  Daily cron job monitoring school submission patterns, independent of the per-submission flow.
+
+---
+
+## 🏗️ Architecture
+
+```bash
 Student Submission
       │
       ▼
@@ -90,16 +95,16 @@ Student Submission
       ▼
 [Step 8] Analytics Agent        — Class trends + intervention detection
          └── [Taleem Gap Agent] — 14-day recovery plan (if triggered)
-      
+
 [Step 9] Ghost School Detector  — Daily cron, separate from submission flow
 ```
 
 ---
 
-## Agents
+## 🤖 Agents
 
 | # | Agent | Trigger | Purpose |
-|---|-------|---------|---------|
+|---|---|---|---|
 | 1 | Zubaan (input) | Every submission | Language detection + translation |
 | 2 | Ingestion | Every submission | Content normalisation + rubric parsing |
 | 3 | Integrity | Parallel with Grading | Plagiarism (FAISS) + AI detection |
@@ -113,19 +118,62 @@ Student Submission
 
 ---
 
-## Environment Variables
+## 🔧 Setup & Installation
 
-See `.env.example` for full list.
+> Make sure Python 3.11+, Node.js 18+, and PostgreSQL (running on `localhost:5432`) are installed.
 
-**Minimum required for demo:**
+### Backend
+
+```bash
+cd backend
+
+# Create virtualenv
+python -m venv venv
+venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Copy and configure env
+copy ..\env.example .env
+:: Edit .env — set GEMINI_API_KEY at minimum
+:: DEMO_MODE=True means no real API calls are needed for the demo
+
+# Seed demo data
+python seed.py
+
+# Start server
+uvicorn main:app --reload --port 8000
+:: API docs at http://localhost:8000/docs
 ```
-GEMINI_API_KEY=your-key-here
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+:: Dashboard at http://localhost:3000
+```
+
+### Demo Login
+
+The dashboard auto-logs in as **Ms. Ayesha Raza** via `GET /auth/demo`. No Google OAuth credentials needed in `DEMO_MODE`.
+
+---
+
+## 🔑 API Configuration
+
+See `.env.example` for the full list. Minimum required for the demo:
+
+```.env
+GEMINI_API_KEY="your-key-here"
 DEMO_MODE=True
 ```
 
 ---
 
-## Cloud Run Deployment
+## ☁️ Cloud Run Deployment
 
 ```bash
 # Build and push
@@ -138,3 +186,11 @@ gcloud run deploy eduflow \
   --region asia-south1 \
   --set-env-vars DEMO_MODE=True,GEMINI_API_KEY=your-key
 ```
+
+---
+
+<div align="center">
+
+⭐ Found this project useful? Drop a star on GitHub!
+
+</div>
